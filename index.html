@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIC - Que ça commence | Espace Jeunes 18-25</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        cic: {
+                            blue: '#0a2540',
+                            accent: '#e02424', 
+                            lightBlue: '#00539b',
+                            slate: '#64748b',
+                            bgDark: '#030712',
+                            cardDark: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark-glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #0a2540 0%, #00539b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-accent {
+            background: linear-gradient(135deg, #e02424 0%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-cic-blue overflow-x-hidden">
+
+    <!-- Custom Modern Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-40 glass border-b border-gray-200/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Brand Logo (Official Image) -->
+                <div class="flex items-center gap-4">
+                    <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-8 sm:h-9 w-auto object-contain transition-transform hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/120x40/0a2540/ffffff?text=CIC';">
+                    <span class="hidden sm:inline-block font-display font-semibold text-xs tracking-widest text-cic-blue/60 border-l border-gray-300 pl-4">ESPACE JEUNES</span>
+                </div>
+                <!-- Quick Navigation Tags -->
+                <div class="hidden md:flex items-center gap-8 font-medium text-sm">
+                    <a href="#caps" class="text-cic-blue/80 hover:text-cic-accent transition-colors">Mes Caps</a>
+                    <a href="#simulator" class="text-cic-blue/80 hover:text-cic-accent transition-colors">Prêt à 0%</a>
+                    <a href="#app-demo" class="text-cic-blue/80 hover:text-cic-accent transition-colors">L'App</a>
+                    <a href="#advisor" class="text-cic-blue/80 hover:text-cic-accent transition-colors">Mon Conseiller</a>
+                </div>
+                <!-- Call To Actions -->
+                <div class="flex items-center gap-3">
+                    <a href="#simulator" class="hidden sm:inline-flex bg-gray-100 hover:bg-gray-200 text-cic-blue text-xs font-semibold px-4 py-2.5 rounded-full transition-all">
+                        Simuler un prêt
+                    </a>
+                    <button onclick="openModal()" class="bg-cic-accent hover:bg-red-600 text-white text-xs font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-cic-accent/20 hover:shadow-cic-accent/30 transition-all transform hover:-translate-y-0.5">
+                        Ouvrir mon compte
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+        <!-- Floating Ambient Blurs -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-100 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+        <div class="absolute top-40 right-10 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                
+                
+                <h1 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">
+                    <span class="text-gradient">CIC</span><br>
+                    <span class="text-gradient-accent">que ça commence.</span>
+                </h1>
+                
+                <p class="text-base sm:text-xl text-cic-slate font-light leading-relaxed mb-10">
+                    Pas de baratin, pas d'intérêts cachés. Gère ton budget en toute liberté avec une appli de pointe, soutenu par un conseiller dédié qui ne touche aucune commission sur ton dos.
+                </p>
+                
+                <!-- Core Badges mimicking Neobanks -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto mb-12">
+                    <div class="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex items-center gap-3 text-left">
+                        <div class="p-3 bg-red-50 text-cic-accent rounded-xl">
+                            <i data-lucide="percent" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-cic-slate uppercase font-bold tracking-wider">Prêt Étudiant</p>
+                            <p class="font-display font-bold text-sm">À 0% jusqu'à 50 000€</p>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex items-center gap-3 text-left">
+                        <div class="p-3 bg-blue-50 text-cic-lightBlue rounded-xl">
+                            <i data-lucide="user-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-cic-slate uppercase font-bold tracking-wider">Humain & Proche</p>
+                            <p class="font-display font-bold text-sm">Conseiller non commissionné</p>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-100 p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex items-center gap-3 text-left">
+                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-cic-slate uppercase font-bold tracking-wider">Gestion Zen</p>
+                            <p class="font-display font-bold text-sm">Anti-découvert Sup'Tréso</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA buttons -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="openModal()" class="bg-cic-blue hover:bg-cic-lightBlue text-white font-semibold px-8 py-4 rounded-full shadow-lg shadow-cic-blue/20 transition-all flex items-center justify-center gap-2">
+                        Créer mon compte en 5 min <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <a href="#caps" class="bg-white border border-gray-200 hover:border-cic-blue text-cic-blue font-semibold px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2">
+                        Découvrir nos solutions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Caps Selector Section -->
+    <section id="caps" class="py-20 bg-gray-50 border-t border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold mb-4">
+                    À chaque situation, son cap.
+                </h2>
+                <p class="text-cic-slate">
+                    Sélectionne ta situation du moment pour découvrir les outils sur-mesure que le CIC a préparé pour ton autonomie.
+                </p>
+            </div>
+            
+            <!-- Selector Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="selectCap('financer')" id="btn-financer" class="cap-btn active bg-cic-blue text-white px-6 py-3 rounded-full font-semibold text-sm transition-all flex items-center gap-2 shadow-md">
+                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> Financer mes études
+                </button>
+                <button onclick="selectCap('logement')" id="btn-logement" class="cap-btn bg-white border border-gray-200 text-cic-blue px-6 py-3 rounded-full font-semibold text-sm transition-all flex items-center gap-2">
+                    <i data-lucide="home" class="w-4 h-4"></i> Trouver mon logement
+                </button>
+                <button onclick="selectCap('gerer')" id="btn-gerer" class="cap-btn bg-white border border-gray-200 text-cic-blue px-6 py-3 rounded-full font-semibold text-sm transition-all flex items-center gap-2">
+                    <i data-lucide="pie-chart" class="w-4 h-4"></i> Gérer mon premier budget
+                </button>
+                <button onclick="selectCap('voyager')" id="btn-voyager" class="cap-btn bg-white border border-gray-200 text-cic-blue px-6 py-3 rounded-full font-semibold text-sm transition-all flex items-center gap-2">
+                    <i data-lucide="globe" class="w-4 h-4"></i> Partir à l'étranger
+                </button>
+            </div>
+            
+            <!-- Dynamic Content Box -->
+            <div id="cap-content-box" class="bg-white border border-gray-100 rounded-3xl p-6 sm:p-10 shadow-xl shadow-gray-100/40 min-h-[400px] flex flex-col justify-between transition-all duration-300">
+                <!-- Content will be injected dynamically via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Loan Simulator Section -->
+    <section id="simulator" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Explanatory Text Column -->
+                <div class="lg:col-span-5">
+                    <div class="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                        <i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Posture Solidaire Unique
+                    </div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold mb-6">
+                        Le Prêt Étudiant à <span class="text-cic-accent font-black">0%</span>.
+                    </h2>
+                    <p class="text-cic-slate mb-6">
+                        Parce que nous croyons en ton potentiel et que nous souhaitons encourager ta réussite, le CIC te propose un prêt exclusif sans intérêt et sans frais de dossier.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="text-cic-accent mt-1"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm">0% TAEG Fixe</h4>
+                                <p class="text-xs text-cic-slate">Aucun intérêt à rembourser. Tu ne rembourses que ce que tu as emprunté.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="text-cic-accent mt-1"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm">Jusqu'à 50 000 €</h4>
+                                <p class="text-xs text-cic-slate">Pour financer tes frais de scolarité, ton installation, ton matériel de travail.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="text-cic-accent mt-1"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="font-bold text-sm">Remboursement Différé</h4>
+                                <p class="text-xs text-cic-slate">Commence à rembourser sereinement une fois tes études terminées.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interactive Simulator Widget -->
+                <div class="lg:col-span-7">
+                    <div class="bg-gray-900 text-white rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-cic-accent/20 rounded-full blur-2xl pointer-events-none"></div>
+                        
+                        <h3 class="font-display font-semibold text-xl mb-8 flex items-center justify-between">
+                            Simulateur Express <span>0% d'intérêts</span>
+                        </h3>
+                        
+                        <!-- Range Slider 1: Amount -->
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs text-gray-400 font-bold uppercase tracking-wider">Montant Souhaité</label>
+                                <span class="font-display font-extrabold text-2xl text-white" id="loan-amount-val">10 000 €</span>
+                            </div>
+                            <input type="range" id="loan-amount" min="1000" max="50000" step="500" value="10000" 
+                                   class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cic-accent"
+                                   oninput="updateLoanSimulation()">
+                            <div class="flex justify-between text-2xs text-gray-500 mt-1 font-mono">
+                                <span>1 000 €</span>
+                                <span>50 000 € max</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Range Slider 2: Duration -->
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs text-gray-400 font-bold uppercase tracking-wider">Durée du prêt</label>
+                                <span class="font-display font-extrabold text-2xl text-white" id="loan-duration-val">5 ans</span>
+                            </div>
+                            <input type="range" id="loan-duration" min="1" max="10" step="1" value="5" 
+                                   class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cic-accent"
+                                   oninput="updateLoanSimulation()">
+                            <div class="flex justify-between text-2xs text-gray-500 mt-1 font-mono">
+                                <span>1 an</span>
+                                <span>10 ans max</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Live Result Box -->
+                        <div class="bg-gray-800/80 border border-gray-700/50 rounded-2xl p-6 mb-6">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-2xs text-gray-400 uppercase tracking-wider font-bold">Mensualité estimée</p>
+                                    <p class="font-display font-black text-3xl text-white mt-1" id="monthly-payment">166.67 €</p>
+                                    <p class="text-3xs text-gray-500">Par mois sans frais de dossier</p>
+                                </div>
+                                <div class="border-l border-gray-700/60 pl-4">
+                                    <p class="text-2xs text-gray-400 uppercase tracking-wider font-bold">Coût total du crédit</p>
+                                    <p class="font-display font-black text-3xl text-emerald-400 mt-1">0 €</p>
+                                    <p class="text-3xs text-gray-500">Taux Annuel Effectif Global Fixe</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Simulator CTA -->
+                        <button onclick="requestLoanCallback()" class="w-full bg-cic-accent hover:bg-red-600 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-cic-accent/10 hover:shadow-cic-accent/20">
+                            Prendre rendez-vous pour ce prêt <i data-lucide="phone-call" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- App Demo Interactive Section -->
+    <section id="app-demo" class="py-20 bg-gray-900 text-white overflow-hidden relative">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,83,155,0.15),transparent_40%)]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Mock Phone Container (Column Left) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <!-- Phone Shell wrapper -->
+                    <div class="relative w-[310px] h-[630px] bg-slate-950 rounded-[40px] border-[10px] border-slate-800 shadow-2xl flex flex-col overflow-hidden">
+                        <!-- Speaker & Camera notch -->
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-2xl z-20 flex justify-center items-center">
+                            <span class="w-10 h-1 bg-slate-950 rounded-full"></span>
+                        </div>
+                        
+                        <!-- Internal App Screen -->
+                        <div class="flex-1 flex flex-col pt-8 pb-4 px-4 bg-slate-950 font-sans select-none overflow-hidden relative">
+                            <!-- Header Mock Phone -->
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="flex items-center gap-2">
+                                    <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-5 w-auto object-contain rounded" onerror="this.onerror=null; this.src='https://placehold.co/40x15/0a2540/ffffff?text=CIC';">
+                                    <span class="text-[9px] text-gray-400 font-semibold tracking-wider">Parcours.J+</span>
+                                </div>
+                                <div class="flex gap-1.5 text-gray-400">
+                                    <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+                                    <i data-lucide="battery" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Account Balance Card -->
+                            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 mb-4 relative overflow-hidden">
+                                <span class="text-3xs text-gray-400 uppercase tracking-wider font-bold">Compte Principal</span>
+                                <h4 class="text-2xl font-bold font-display mt-0.5" id="mock-balance">348,50 €</h4>
+                                <div class="flex justify-between items-center mt-3 text-3xs text-gray-400">
+                                    <span>Rib ... 4209</span>
+                                    <span class="text-emerald-400 flex items-center gap-0.5"><i data-lucide="trending-up" class="w-2.5 h-2.5"></i> +12% ce mois</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Toggle Menu inside Phone Screen to show features -->
+                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-2 px-1">Outils digitaux exclusifs</p>
+                            <div class="grid grid-cols-2 gap-2 mb-4">
+                                <button onclick="simulateAppFeature('suptreso')" id="m-suptreso" class="app-feature-btn active text-left p-2.5 bg-gray-900 border border-gray-800 hover:border-cic-accent rounded-xl transition-all">
+                                    <i data-lucide="shield-alert" class="w-4 h-4 text-cic-accent mb-1.5"></i>
+                                    <p class="text-[10px] font-bold leading-tight">Sup'Tréso</p>
+                                    <p class="text-[8px] text-gray-400 leading-tight">Alerte budget</p>
+                                </button>
+                                <button onclick="simulateAppFeature('options')" id="m-options" class="app-feature-btn text-left p-2.5 bg-gray-900 border border-gray-800 hover:border-cic-accent rounded-xl transition-all">
+                                    <i data-lucide="globe-2" class="w-4 h-4 text-blue-400 mb-1.5"></i>
+                                    <p class="text-[10px] font-bold leading-tight">International</p>
+                                    <p class="text-[8px] text-gray-400 leading-tight">Frais à 0€</p>
+                                </button>
+                                <button onclick="simulateAppFeature('categories')" id="m-categories" class="app-feature-btn text-left p-2.5 bg-gray-900 border border-gray-800 hover:border-cic-accent rounded-xl transition-all">
+                                    <i data-lucide="shapes" class="w-4 h-4 text-emerald-400 mb-1.5"></i>
+                                    <p class="text-[10px] font-bold leading-tight">Catégorisation</p>
+                                    <p class="text-[8px] text-gray-400 leading-tight">Suivi auto</p>
+                                </button>
+                                <button onclick="simulateAppFeature('caution')" id="m-caution" class="app-feature-btn text-left p-2.5 bg-gray-900 border border-gray-800 hover:border-cic-accent rounded-xl transition-all">
+                                    <i data-lucide="key" class="w-4 h-4 text-purple-400 mb-1.5"></i>
+                                    <p class="text-[10px] font-bold leading-tight">Caution Loc.</p>
+                                    <p class="text-[8px] text-gray-400 leading-tight">Garant logt</p>
+                                </button>
+                            </div>
+                            
+                            <!-- Dynamic Simulation feedback area inside mock phone -->
+                            <div class="flex-1 bg-gray-900/60 border border-gray-800/40 rounded-xl p-3 flex flex-col justify-between text-xs overflow-y-auto" id="mock-app-screen-body">
+                                <!-- Initial status is Sup'tréso -->
+                                <div class="space-y-2">
+                                    <p class="font-bold text-[11px] text-cic-accent flex items-center gap-1"><i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> Alerte Sup'Tréso active</p>
+                                    <p class="text-3xs text-gray-400 leading-normal">Si ton solde s'approche de 0€, l'app t'envoie un push immédiat et bascule automatiquement des fonds d'épargne de secours pour éviter les frais d'agios.</p>
+                                    <div class="bg-gray-900 p-2 rounded-lg border border-gray-800 mt-2 flex justify-between items-center">
+                                        <span class="text-3xs text-gray-400">Seuil d'alerte configuré</span>
+                                        <span class="text-3xs font-bold text-white">20,00 €</span>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-800/80 p-1.5 rounded-lg text-center font-bold text-3xs text-gray-300">Option incluse à 0€</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informational Column (Column Right) -->
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-1.5 bg-blue-900/40 border border-blue-800 text-blue-300 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                        <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Technologie Neobank-grade
+                    </div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold mb-6">
+                        Une application pensée pour ta liberté d'action.
+                    </h2>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Ne perds plus de temps dans des agences à remplir des formulaires. Pilote tes finances en temps réel de n'importe où sur l'application mobile CIC. Des notifications intelligentes t'évitent de glisser dans le rouge.
+                    </p>
+                    
+                    <!-- Responsive Grid Features -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="border border-gray-800 p-5 rounded-2xl hover:border-gray-700 transition-colors">
+                            <h4 class="font-bold text-base mb-2 flex items-center gap-2 text-white">
+                                <span class="p-1.5 bg-red-950/80 border border-red-900/50 text-cic-accent rounded-lg"><i data-lucide="shield-alert" class="w-4 h-4"></i></span> Sup'Tréso
+                            </h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Un système intelligent d'alerte et de transfert automatique pour éviter d'avoir un compte à découvert et d'accumuler des frais d'agios inutiles.
+                            </p>
+                        </div>
+                        <div class="border border-gray-800 p-5 rounded-2xl hover:border-gray-700 transition-colors">
+                            <h4 class="font-bold text-base mb-2 flex items-center gap-2 text-white">
+                                <span class="p-1.5 bg-blue-950/80 border border-blue-900/50 text-blue-400 rounded-lg"><i data-lucide="globe-2" class="w-4 h-4"></i></span> Option Internationale
+                            </h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Tu pars à l'étranger pour tes études ou ton stage ? Active l'option en 1 clic pour payer et retirer à l'étranger sans le moindre frais de change.
+                            </p>
+                        </div>
+                        <div class="border border-gray-800 p-5 rounded-2xl hover:border-gray-700 transition-colors">
+                            <h4 class="font-bold text-base mb-2 flex items-center gap-2 text-white">
+                                <span class="p-1.5 bg-emerald-950/80 border border-emerald-900/50 text-emerald-400 rounded-lg"><i data-lucide="shapes" class="w-4 h-4"></i></span> Catégorisation Auto
+                            </h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Alimentation, abonnements, sorties... Ton budget est automatiquement classé et synthétisé dans des graphiques colorés pour t'aider à t'organiser.
+                            </p>
+                        </div>
+                        <div class="border border-gray-800 p-5 rounded-2xl hover:border-gray-700 transition-colors">
+                            <h4 class="font-bold text-base mb-2 flex items-center gap-2 text-white">
+                                <span class="p-1.5 bg-purple-950/80 border border-purple-900/50 text-purple-400 rounded-lg"><i data-lucide="key" class="w-4 h-4"></i></span> Caution Locative
+                            </h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Besoin d'un garant pour louer ton appartement étudiant ? Le CIC se porte caution pour rassurer ton futur propriétaire et débloquer ton dossier.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Advisor Mock Chat Section -->
+    <section id="advisor" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Info Column (Left) -->
+                <div class="lg:col-span-5">
+                    <div class="inline-flex items-center gap-1.5 bg-red-50 border border-red-100 text-cic-accent text-xs font-bold px-3 py-1 rounded-full mb-4">
+                        <i data-lucide="user-check" class="w-3.5 h-3.5"></i> L'atout Humain du CIC
+                    </div>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold mb-6">
+                        Un conseiller dédié, <span class="text-gradient">non commissionné.</span>
+                    </h2>
+                    <p class="text-cic-slate mb-6 leading-relaxed">
+                        C'est ce qui fait notre force par rapport aux néobanques. Tu disposes d'un conseiller attitré qui t'aide dans tes prises de décisions importantes (prêt, budget, caution).
+                    </p>
+                    <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 mb-6">
+                        <h4 class="font-bold text-sm mb-1 flex items-center gap-1.5 text-cic-blue"><i data-lucide="heart-handshake" class="w-4 h-4 text-cic-accent"></i> Aucun conflit d'intérêt</h4>
+                        <p class="text-xs text-cic-slate">Nos conseillers ne touchent aucune commission sur les produits qu'ils te conseillent. Leur unique but : t'aider à démarrer ton avenir en toute confiance.</p>
+                    </div>
+                    <p class="text-xs text-cic-slate">
+                        Découvre l'équipe d'experts de l'agence BUZZ mobilisée pour répondre à tes questions de budget en un clin d'œil.
+                    </p>
+                </div>
+                
+                <!-- Simulated Interactive Chat Widget (Right) -->
+                <div class="lg:col-span-7">
+                    <div class="bg-gray-50 border border-gray-200/60 rounded-3xl overflow-hidden shadow-xl flex flex-col h-[460px]">
+                        <!-- Chat Widget Header -->
+                        <div class="bg-cic-blue text-white px-5 py-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <div class="w-10 h-10 bg-cic-accent rounded-full flex items-center justify-center font-display font-extrabold text-sm text-white border-2 border-white">
+                                        T
+                                    </div>
+                                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-cic-blue"></span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs" id="chat-advisor-name">Tamara Raton</h4>
+                                    <p class="text-3xs text-gray-300">Conseillère Spécialisée Étudiants CIC</p>
+                                </div>
+                            </div>
+                            <!-- Small Selector to change advisors simulating different specialists -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-3xs text-gray-400">Changer de profil :</span>
+                                <select onchange="changeAdvisorProfile(this.value)" class="bg-gray-800 text-3xs text-white border border-gray-700 px-2 py-1 rounded-lg outline-none cursor-pointer">
+                                    <option value="tamara">Tamara (Stratège)</option>
+                                    <option value="celia">Célia (Social Media)</option>
+                                    <option value="solene">Solène (RSE)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat Conversation Box -->
+                        <div class="flex-1 p-4 space-y-3 overflow-y-auto" id="chat-message-container">
+                            <!-- Initial Greeting Message -->
+                            <div class="flex items-start gap-2.5">
+                                <div class="w-6 h-6 rounded-full bg-cic-blue/10 flex items-center justify-center text-cic-blue text-4xs font-bold">T</div>
+                                <div class="bg-white border border-gray-100 px-3.5 py-2.5 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] text-xs">
+                                    <p class="leading-normal">Salut ! Je suis ravie de t'accompagner. Des questions sur le Prêt à 0%, la gestion de ton premier logement, ou comment éviter les découverts ? Dis-moi tout ! 😊</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fixed Quick Questions Suggestions for immediate UX feedback -->
+                        <div class="p-3 bg-white border-t border-gray-100 flex gap-2 overflow-x-auto" id="quick-chat-questions">
+                            <button onclick="sendQuickMessage('pret')" class="bg-gray-100 hover:bg-gray-200 text-cic-blue text-3xs font-semibold px-3 py-2 rounded-full whitespace-nowrap transition-colors">
+                                Des détails sur le prêt à 0% ?
+                            </button>
+                            <button onclick="sendQuickMessage('suptreso')" class="bg-gray-100 hover:bg-gray-200 text-cic-blue text-3xs font-semibold px-3 py-2 rounded-full whitespace-nowrap transition-colors">
+                                C'est quoi Sup'Tréso ?
+                            </button>
+                            <button onclick="sendQuickMessage('rdv')" class="bg-gray-100 hover:bg-gray-200 text-cic-blue text-3xs font-semibold px-3 py-2 rounded-full whitespace-nowrap transition-colors">
+                                Comment ouvrir mon compte ?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-gray-800 pb-8 mb-8">
+                <!-- Brand Footer (Official Image) -->
+                <div class="flex items-center gap-4">
+                    <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-10 w-auto object-contain rounded-lg" onerror="this.onerror=null; this.src='https://placehold.co/150x50/0a2540/ffffff?text=CIC';">
+                    <span class="font-display font-semibold text-xs tracking-widest text-gray-400 border-l border-gray-700 pl-4 uppercase">QUE ÇA COMMENCE.</span>
+                </div>
+                <p class="text-3xs text-gray-500 text-center sm:text-right max-w-sm">
+                    Recommandation globale d'activation de la cible jeunes 18-25 ans pour la compétition de Juin 2026 élaborée par l'Agence BUZZ.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-3xs text-gray-500">
+                <p>&copy; 2026 CIC. Tous droits réservés. Modèle fictif de démonstration de l'Agence BUZZ.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white transition-colors">Politique RSE</a>
+                    <a href="#" class="hover:text-white transition-colors">Mentions Légales</a>
+                    <a href="#" class="hover:text-white transition-colors">Données Personnelles</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Account Opening Interactive Modal -->
+    <div id="account-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-cic-accent/10 rounded-full blur-2xl"></div>
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-cic-slate hover:text-cic-blue">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <h3 class="font-display font-extrabold text-2xl mb-4">Ouvrons ton compte !</h3>
+            <p class="text-xs text-cic-slate mb-6">Prépare simplement ta pièce d'identité et ton justificatif étudiant. 5 minutes suffisent.</p>
+            
+            <form onsubmit="handleAccountSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-2xs font-bold uppercase tracking-wider text-cic-slate mb-1">Prénom & Nom</label>
+                    <input type="text" required placeholder="Mathis Rochette" class="w-full bg-gray-50 border border-gray-200 focus:border-cic-accent px-4 py-3 rounded-xl outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-2xs font-bold uppercase tracking-wider text-cic-slate mb-1">Adresse Email</label>
+                    <input type="email" required placeholder="mathis.rochette@gmail.com" class="w-full bg-gray-50 border border-gray-200 focus:border-cic-accent px-4 py-3 rounded-xl outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-2xs font-bold uppercase tracking-wider text-cic-slate mb-1">Ton Cap du moment</label>
+                    <select class="w-full bg-gray-50 border border-gray-200 focus:border-cic-accent px-4 py-3 rounded-xl outline-none text-sm cursor-pointer">
+                        <option>Je cherche un Prêt Étudiant 0%</option>
+                        <option>Je cherche mon premier appartement</option>
+                        <option>Je souhaite gérer mon budget</option>
+                        <option>Je prépare mon départ Erasmus</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full bg-cic-blue hover:bg-cic-lightBlue text-white font-bold py-3.5 rounded-xl transition-all shadow-md mt-6">
+                    Lancer mon inscription
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts & Interaction Logic -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Custom Toast system replacing intrusive alert()
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `flex items-center gap-3 p-4 rounded-2xl shadow-xl border text-sm transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto bg-white ${
+                type === 'success' ? 'border-emerald-100 text-slate-800' : 'border-red-100 text-slate-800'
+            }`;
+            
+            const icon = type === 'success' ? 'check-circle' : 'alert-circle';
+            const iconColor = type === 'success' ? 'text-emerald-500' : 'text-cic-accent';
+
+            toast.innerHTML = `
+                <div class="${iconColor}">
+                    <i data-lucide="${icon}" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-slate-900">${message}</p>
+                </div>
+                <button class="text-slate-400 hover:text-slate-600 focus:outline-none" onclick="this.parentElement.remove()">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            // Auto-dismiss
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        }
+        
+        // Modal Handlers
+        function openModal() {
+            document.getElementById('account-modal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('account-modal').classList.add('hidden');
+        }
+        function handleAccountSubmit(e) {
+            e.preventDefault();
+            showToast("Génial ! Ton dossier d'inscription à l'offre Parcours.J+ a bien été initialisé. Un conseiller étudie tes infos !", 'success');
+            closeModal();
+        }
+
+        // Dynamic Caps Selector content library
+        const capsData = {
+            financer: {
+                title: "Finance tes études sans stress financier.",
+                desc: "Parce que ton avenir ne devrait pas être une source d'inquiétude, le CIC s'engage à tes côtés.",
+                features: [
+                    { icon: "percent", title: "Prêt Étudiant à 0%", text: "Exclusivité unique sur le marché : emprunte jusqu'à 50 000 € à taux zéro sans frais de dossier." },
+                    { icon: "calendar-clock", title: "Remboursement reporté", text: "Adapte ton plan de remboursement pour ne commencer à rembourser qu'une fois tes études terminées." },
+                    { icon: "check", title: "Aucune caution exigée dans l'offre de base", text: "Nous étudions ton dossier individuellement pour simplifier tes démarches administratives." }
+                ],
+                cta: "Calculer mon prêt à 0%"
+            },
+            logement: {
+                title: "S'installer sereinement dans son premier appartement.",
+                desc: "Du garant à l'assurance habitation, on s'occupe de rassurer ton futur propriétaire.",
+                features: [
+                    { icon: "key-round", title: "Le CIC se porte caution pour toi", text: "Active l'option Caution Locative pour rassurer les bailleurs les plus exigeants." },
+                    { icon: "shield-alert", title: "Assurance Habitation Étudiante", text: "Bénéficie d'une assurance habitation ou colocation sur-mesure à prix mini." },
+                    { icon: "home", title: "Crédit d'Installation initial", text: "Un coup de pouce financier rapide à taux mini pour acheter tes premiers meubles." }
+                ],
+                cta: "Découvrir la Caution Locative"
+            },
+            gerer: {
+                title: "Pilote ton budget sans la hantise du découvert.",
+                desc: "Des outils nouvelle génération intégrés à ton application mobile pour t'aider à t'organiser.",
+                features: [
+                    { icon: "shield-check", title: "Alerte Sécurité Sup'Tréso", text: "L'option intelligente qui t'avertit et transfère des fonds pour t'éviter d'être à découvert." },
+                    { icon: "bar-chart-3", title: "Graphiques de dépenses", text: "Une catégorisation automatique de tes achats pour savoir exactement où va ton argent." },
+                    { icon: "bell", title: "Notifications de plafonds personnalisées", text: "Règle tes propres seuils de dépenses hebdomadaires pour rester serein." }
+                ],
+                cta: "Tester l'application"
+            },
+            voyager: {
+                title: "Pars à la conquête du monde avec 0 frais à l'étranger.",
+                desc: "Erasmus, stage international ou simples vacances, l'Option Internationale te suit partout.",
+                features: [
+                    { icon: "wallet", title: "Zéro frais de change", text: "Paiements et retraits illimités et sans frais partout dans le monde en activant l'option." },
+                    { icon: "plane", title: "Assistance rapatriement incluse", text: "Pars l'esprit tranquille, tes assurances de carte te couvrent en cas de coup dur." },
+                    { icon: "heart", title: "Garantie santé d'urgence internationale", text: "Accès à des téléconsultations médicales gratuites à distance pendant ton séjour." }
+                ],
+                cta: "Activer l'Option Internationale"
+            }
+        };
+
+        // Render initially the default selected Cap (financer)
+        window.onload = function() {
+            selectCap('financer');
+            updateLoanSimulation();
+        }
+
+        // Cap change algorithm
+        function selectCap(capId) {
+            // Update selected buttons active classes mimicking modern neobank UI tabs
+            document.querySelectorAll('.cap-btn').forEach(btn => {
+                btn.className = "cap-btn bg-white border border-gray-200 text-cic-blue px-6 py-3 rounded-full font-semibold text-sm transition-all flex items-center gap-2";
+            });
+            const selectedBtn = document.getElementById(`btn-${capId}`);
+            if (selectedBtn) {
+                selectedBtn.className = "cap-btn active bg-cic-blue text-white px-6 py-3 rounded-full font-semibold text-sm transition-all flex items-center gap-2 shadow-md";
+            }
+
+            // Render content box structure
+            const cap = capsData[capId];
+            const container = document.getElementById('cap-content-box');
+            
+            let featuresHtml = '';
+            cap.features.forEach(f => {
+                featuresHtml += `
+                    <div class="flex gap-4 items-start">
+                        <div class="p-3 bg-red-50 text-cic-accent rounded-xl">
+                            <i data-lucide="${f.icon}" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-sm text-cic-blue mb-1">${f.title}</h4>
+                            <p class="text-xs text-cic-slate leading-relaxed">${f.text}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-4">
+                        <h3 class="font-display font-extrabold text-2xl text-cic-blue">${cap.title}</h3>
+                        <p class="text-xs text-cic-slate leading-relaxed">${cap.desc}</p>
+                        <div class="pt-4">
+                            <button onclick="openModal()" class="bg-cic-accent hover:bg-red-600 text-white font-bold text-xs px-6 py-3.5 rounded-full shadow-lg shadow-cic-accent/15 transition-all flex items-center gap-2">
+                                ${cap.cta} <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 space-y-6">
+                        ${featuresHtml}
+                    </div>
+                </div>
+            `;
+            
+            // Reinitialize icons in newly created HTML elements
+            lucide.createIcons();
+        }
+
+        // Interactive Prêt 0% Simulation Logic
+        function updateLoanSimulation() {
+            const amount = parseFloat(document.getElementById('loan-amount').value);
+            const years = parseInt(document.getElementById('loan-duration').value);
+            
+            // Update slide value displays
+            document.getElementById('loan-amount-val').innerText = amount.toLocaleString('fr-FR') + " €";
+            document.getElementById('loan-duration-val').innerText = years + " an" + (years > 1 ? "s" : "");
+            
+            // In a 0% loan, monthly payment is strictly Amount / (Years * 12)
+            const months = years * 12;
+            const monthlyPaymentValue = amount / months;
+            
+            document.getElementById('monthly-payment').innerText = monthlyPaymentValue.toFixed(2) + " €";
+        }
+
+        function requestLoanCallback() {
+            showToast("Choix enregistré ! Un SMS de confirmation t'a été envoyé pour fixer ton RDV de validation.", 'success');
+        }
+
+        // App Mock Demo Interaction Logic
+        const appFeaturesData = {
+            suptreso: {
+                balance: "348,50 €",
+                title: "Alerte Sup'Tréso active",
+                text: "Si ton solde s'approche de 0€, l'app t'envoie un push immédiat et bascule automatiquement des fonds d'épargne de secours pour éviter les frais d'agios.",
+                extra: "Seuil d'alerte configuré à 20,00 €",
+                icon: "shield-alert",
+                color: "text-cic-accent"
+            },
+            options: {
+                balance: "248,50 USD",
+                title: "Option Internationale Activée",
+                text: "Tu es actuellement à l'étranger. Les taux de change sont gelés à 0% de frais sur toutes tes opérations. Retire et paie sans mauvaise surprise.",
+                extra: "Aucun frais de change sur les devises majeures",
+                icon: "globe-2",
+                color: "text-blue-400"
+            },
+            categories: {
+                balance: "185,20 €",
+                title: "Ton Budget : Mars 2026",
+                text: "L'application catégorise tes dépenses automatiquement : Alimentation (45%), Transports (20%), Sorties (35%).",
+                extra: "Moyenne mensuelle de dépenses : 320 €",
+                icon: "shapes",
+                color: "text-emerald-400"
+            },
+            caution: {
+                balance: "348,50 €",
+                title: "Dossier Caution en ligne",
+                text: "Besoin d'un garant pour ton bailleur ? Ta demande de Caution Locative CIC a été transmise avec succès au propriétaire de ton studio.",
+                extra: "Statut : Approuvé par ton conseiller",
+                icon: "key",
+                color: "text-purple-400"
+            }
+        };
+
+        function simulateAppFeature(featureId) {
+            // Manage active classes on app feature buttons
+            document.querySelectorAll('.app-feature-btn').forEach(btn => {
+                btn.className = "app-feature-btn text-left p-2.5 bg-gray-900 border border-gray-800 hover:border-cic-accent rounded-xl transition-all";
+            });
+            document.getElementById(`m-${featureId}`).className = "app-feature-btn active text-left p-2.5 bg-gray-900 border border-cic-accent rounded-xl transition-all";
+
+            const data = appFeaturesData[featureId];
+            
+            // Update balance & body inside phone mockup
+            document.getElementById('mock-balance').innerText = data.balance;
+            
+            const screenBody = document.getElementById('mock-app-screen-body');
+            screenBody.innerHTML = `
+                <div class="space-y-2">
+                    <p class="font-bold text-[11px] ${data.color} flex items-center gap-1"><i data-lucide="${data.icon}" class="w-3.5 h-3.5"></i> ${data.title}</p>
+                    <p class="text-3xs text-gray-400 leading-normal">${data.text}</p>
+                    <div class="bg-gray-900 p-2 rounded-lg border border-gray-800 mt-2 flex justify-between items-center">
+                        <span class="text-3xs text-gray-400">${data.extra}</span>
+                    </div>
+                </div>
+                <div class="bg-gray-800/80 p-1.5 rounded-lg text-center font-bold text-3xs text-gray-300">Option incluse à 0€</div>
+            `;
+            
+            lucide.createIcons();
+        }
+
+        // Interactive Advisors Profiles and Simulated Chat
+        const advisorProfiles = {
+            tamara: { name: "Tamara Raton", desc: "Conseillère Spécialisée Étudiants CIC", init: "T", color: "bg-cic-blue" },
+            celia: { name: "Célia Compan", desc: "Spécialiste Réseaux Sociaux & Budget", init: "C", color: "bg-purple-600" },
+            solene: { name: "Solène Sagnet", desc: "Référente RSE & Numérique Responsable", init: "S", color: "bg-emerald-600" }
+        };
+
+        let currentAdvisor = 'tamara';
+
+        function changeAdvisorProfile(advisorKey) {
+            const profile = advisorProfiles[advisorKey];
+            currentAdvisor = advisorKey;
+            
+            // Update Header Name and sub
+            document.getElementById('chat-advisor-name').innerText = profile.name;
+            const headerAvatar = document.querySelector('#advisor #chat-advisor-name').previousElementSibling;
+            
+            // Clear message history and restart with customized advisor greeting
+            const messageContainer = document.getElementById('chat-message-container');
+            
+            let helloText = "";
+            if(advisorKey === 'tamara') {
+                helloText = `Salut ! Je suis Tamara, experte en stratégie de vie étudiante au CIC. Des questions sur notre prêt à 0% ou sur les démarches administratives de logement ? Je suis là !`;
+            } else if(advisorKey === 'celia') {
+                helloText = `Hey ! Célia à l'appareil. Gérer ses thunes en restant connecté et en profitant de la vie, c'est mon sujet. Je te décode nos options mobiles !`;
+            } else {
+                helloText = `Bonjour ! Je suis Solène. Au CIC, on fait attention à ton budget ET à notre planète. Discutons de nos options éco-responsables et solidaires.`;
+            }
+
+            messageContainer.innerHTML = `
+                <div class="flex items-start gap-2.5 animate-fadeIn">
+                    <div class="w-6 h-6 rounded-full ${profile.color} text-white flex items-center justify-center text-4xs font-bold">${profile.init}</div>
+                    <div class="bg-white border border-gray-100 px-3.5 py-2.5 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] text-xs">
+                        <p class="leading-normal">${helloText}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        const questionResponses = {
+            pret: {
+                userText: "Dis m'en plus sur le Prêt à 0% !",
+                botText: "C'est notre produit phare ! Tu peux demander jusqu'à 50 000 € à 0% de taux d'intérêt. Tu ne rembourses aucun centime de plus que ce que tu as emprunté. En plus, on peut configurer un remboursement différé : tu étudies sereinement, et tu rembourses quand tu décroches ton premier job !"
+            },
+            suptreso: {
+                userText: "Qu'est ce que Sup'Tréso ?",
+                botText: "Sup'Tréso est un filet de sécurité gratuit intégré à l'app. Tu règles un seuil (ex: 20€). Si ton solde glisse en-dessous, le système transfère instantanément quelques euros depuis ton épargne pour t'éviter d'être à découvert et de payer des agios. Simple et ultra-sécurisant !"
+            },
+            rdv: {
+                userText: "Comment puis-je ouvrir mon compte ?",
+                botText: "C'est super simple ! Remplis le formulaire express en haut de cette page en 5 minutes. Tu seras ensuite recontacté(e) pour un rendez-vous (en agence ou à distance, c'est toi qui choisis) avec ton conseiller dédié pour valider tes options !"
+            }
+        };
+
+        function sendQuickMessage(type) {
+            const data = questionResponses[type];
+            if (!data) return;
+
+            const messageContainer = document.getElementById('chat-message-container');
+            const profile = advisorProfiles[currentAdvisor];
+
+            // Append User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = "flex items-start gap-2.5 justify-end";
+            userMsg.innerHTML = `
+                <div class="bg-cic-accent text-white px-3.5 py-2.5 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] text-xs">
+                    <p class="leading-normal">${data.userText}</p>
+                </div>
+            `;
+            messageContainer.appendChild(userMsg);
+            
+            // Scroll to bottom
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+
+            // Append Advisor Typing indicator, then actual response after a small delay
+            const typingMsg = document.createElement('div');
+            typingMsg.className = "flex items-start gap-2.5 typing-indicator-mock";
+            typingMsg.innerHTML = `
+                <div class="w-6 h-6 rounded-full ${profile.color} text-white flex items-center justify-center text-4xs font-bold">${profile.init}</div>
+                <div class="bg-gray-100 px-3.5 py-2.5 rounded-2xl rounded-tl-none text-xs max-w-[80%] text-cic-slate italic">
+                    En train d'écrire...
+                </div>
+            `;
+            messageContainer.appendChild(typingMsg);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+
+            setTimeout(() => {
+                // Remove typing indicator
+                const indicator = messageContainer.querySelector('.typing-indicator-mock');
+                if (indicator) indicator.remove();
+
+                // Append actual Bot/Advisor response
+                const botMsg = document.createElement('div');
+                botMsg.className = "flex items-start gap-2.5 animate-fadeIn";
+                botMsg.innerHTML = `
+                    <div class="w-6 h-6 rounded-full ${profile.color} text-white flex items-center justify-center text-4xs font-bold">${profile.init}</div>
+                    <div class="bg-white border border-gray-100 px-3.5 py-2.5 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] text-xs">
+                        <p class="leading-normal">${data.botText}</p>
+                    </div>
+                `;
+                messageContainer.appendChild(botMsg);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>

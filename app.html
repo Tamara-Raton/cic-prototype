@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CIC Parcours.J+ | L'application de tes premiers caps</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        cic: {
+                            blue: '#0a2540',
+                            accent: '#e02424', 
+                            lightBlue: '#00539b',
+                            slate: '#64748b',
+                            darkBg: '#090d16',
+                            cardBg: '#151b26',
+                            activeTab: '#3b82f6'
+                        }
+                    },
+                    fontSize: {
+                        '3xs': '0.65rem',
+                        '2xs': '0.75rem',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Smooth Custom Scrollbar for App Views */
+        .app-view-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .app-view-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        /* Glass effects mimicking premium mobile OS UI */
+        .glass-tab {
+            background: rgba(21, 27, 38, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Responsive viewport height trick */
+        .app-height {
+            height: 100%;
+        }
+
+        /* Mock mobile frame adjustments */
+        @media (max-width: 640px) {
+            .phone-frame {
+                border-width: 0px !important;
+                border-radius: 0px !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                height: 100vh !important;
+                box-shadow: none !important;
+            }
+            .notch-bar {
+                display: none !important;
+            }
+            .app-wrapper {
+                padding: 0 !important;
+                background-color: #090d16 !important;
+            }
+        }
+
+        /* Pulse animation for active features */
+        .pulse-accent {
+            animation: pulseAccent 2s infinite;
+        }
+        @keyframes pulseAccent {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.3); opacity: 0.6; }
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-900 text-white overflow-hidden h-full flex items-center justify-center app-wrapper p-4 sm:p-6 lg:p-8">
+
+    <!-- Custom Modern App Toast Container -->
+    <div id="app-toast-container" class="absolute top-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 max-w-xs w-11/12 pointer-events-none"></div>
+
+    <!-- Mock Phone Shell (Full Screen on Mobile, Framed Device on Desktop) -->
+    <div class="phone-frame relative w-full max-w-[390px] h-[800px] bg-cic-darkBg rounded-[55px] border-[12px] border-slate-800 shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
+        
+        <!-- Camera Notch for Desktop Preview -->
+        <div class="notch-bar absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-7 bg-slate-800 rounded-b-3xl z-50 flex items-center justify-center">
+            <span class="w-12 h-1 bg-black rounded-full mb-1"></span>
+        </div>
+
+        <!-- App Screens Container -->
+        <div class="flex-1 flex flex-col relative h-full w-full overflow-hidden pt-8 pb-16">
+            
+            <!-- Dynamic StatusBar Mock -->
+            <div class="absolute top-0 left-0 w-full px-6 pt-2 pb-1 flex justify-between items-center text-2xs font-semibold text-gray-400 z-40 bg-cic-darkBg/60 backdrop-blur-md">
+                <span id="app-clock" class="font-display">11:54</span>
+                <div class="flex items-center gap-1.5">
+                    <i data-lucide="signal" class="w-3 h-3 text-emerald-400"></i>
+                    <span class="text-[9px] tracking-widest font-bold">5G</span>
+                    <i data-lucide="battery" class="w-3.5 h-3.5"></i>
+                </div>
+            </div>
+
+            <!-- ONBOARDING / SPLASH SCREEN (Overlay) -->
+            <div id="screen-splash" class="absolute inset-0 bg-gradient-to-b from-cic-blue via-cic-darkBg to-cic-darkBg z-50 flex flex-col justify-between p-8 transition-all duration-500">
+                <div class="flex flex-col items-center pt-16 text-center">
+                    <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-12 w-auto object-contain mb-4" onerror="this.onerror=null; this.src='https://placehold.co/120x40/0a2540/ffffff?text=CIC';">
+                    <span class="font-display font-bold text-3xs tracking-widest text-blue-400 uppercase">Parcours.J+</span>
+                </div>
+
+                <div class="space-y-6 text-center">
+                    <div class="space-y-2">
+                        <p class="text-3xs text-cic-accent font-extrabold uppercase tracking-widest">L'Application Mobile</p>
+                        <h1 class="font-display text-3xl font-black leading-tight text-white">
+                            CIC<br><span class="text-gradient text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-400">que ça commence</span>
+                        </h1>
+                        <p class="text-xs text-gray-400 max-w-xs mx-auto">
+                            Prends le contrôle de tes projets. Zéro baratin, taux zéro unique, et ton conseiller dédié dans la poche.
+                        </p>
+                    </div>
+
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 text-left flex items-center gap-3">
+                        <div class="p-2.5 bg-red-950/50 border border-red-900/30 text-cic-accent rounded-xl">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xs font-bold text-white">Posture d'aide & Solidarité</p>
+                            <p class="text-3xs text-gray-400 leading-normal">Par l'Agence BUZZ pour la cible 18-25 ans.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pb-6">
+                    <button onclick="dismissSplash()" class="w-full bg-cic-accent hover:bg-red-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-cic-accent/20 transition-all flex items-center justify-center gap-2">
+                        C'est parti ! <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MAIN VIEWS CONTAINER -->
+            <div class="flex-1 overflow-y-auto app-view-container px-4 pt-4 bg-cic-darkBg relative">
+
+                <!-- 1. DASHBOARD VIEW (HOME) -->
+                <div id="view-home" class="space-y-5 animate-fadeIn">
+                    
+                    <!-- App Welcome Header -->
+                    <div class="flex justify-between items-center pb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cic-accent to-red-500 flex items-center justify-center font-display font-extrabold text-sm border-2 border-slate-800 shadow-md">
+                                MR
+                            </div>
+                            <div>
+                                <p class="text-3xs text-gray-400 uppercase tracking-wider">Content de te revoir</p>
+                                <h3 class="font-display font-extrabold text-sm text-white">Mathis Rochette</h3>
+                            </div>
+                        </div>
+                        <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-6 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x25/0a2540/ffffff?text=CIC';">
+                    </div>
+
+                    <!-- IMMERSIVE ACCOUNT CARD -->
+                    <div class="relative bg-gradient-to-br from-cic-blue via-slate-900 to-cic-darkBg border border-slate-800 rounded-3xl p-5 overflow-hidden shadow-xl">
+                        <div class="absolute -top-12 -right-12 w-32 h-32 bg-cic-accent/15 rounded-full blur-2xl"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-3xs font-extrabold uppercase tracking-widest text-blue-400">Compte Parcours.J+</span>
+                            <span class="text-3xs font-bold text-gray-400 font-mono">Rib *4209</span>
+                        </div>
+                        
+                        <div class="space-y-1">
+                            <h2 class="text-3xl font-black font-display tracking-tight text-white" id="app-balance">348,50 €</h2>
+                            <p class="text-3xs text-emerald-400 flex items-center gap-1">
+                                <i data-lucide="trending-up" class="w-3 h-3"></i> +12% de budget vs mois dernier
+                            </p>
+                        </div>
+
+                        <!-- Micro Info Grid inside card -->
+                        <div class="grid grid-cols-2 gap-4 border-t border-slate-800/80 pt-4 mt-5">
+                            <div>
+                                <p class="text-[9px] text-gray-400 uppercase font-semibold">Option Internationale</p>
+                                <p class="text-2xs font-bold text-white flex items-center gap-1.5 mt-0.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500" id="badge-intl-card"></span>
+                                    <span id="text-intl-card">Désactivée</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] text-gray-400 uppercase font-semibold">Sécurité Sup'Tréso</p>
+                                <p class="text-2xs font-bold text-white flex items-center gap-1.5 mt-0.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                    <span>Active (&lt; <span id="threshold-val-card">20</span>€)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LOAN STATUS CARD (DYNAMIC) -->
+                    <div id="loan-status-widget" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 animate-slideIn">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[9px] font-extrabold text-cic-accent uppercase tracking-wider">Demande de Prêt à 0%</span>
+                            <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 border border-yellow-800/40 rounded-full text-4xs font-bold">En analyse</span>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <div class="p-2 bg-yellow-950/40 rounded-xl text-yellow-400">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-2xs font-bold text-white">Dossier en cours d'étude</p>
+                                <p class="text-3xs text-gray-400 leading-normal">Montant : <span class="font-bold text-white font-mono" id="loan-widget-amount">10 000 €</span>. Votre conseiller vous contacte d'ici 24h.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QUICK ACTIONS IN-APP -->
+                    <div class="space-y-3">
+                        <h4 class="text-2xs font-extrabold uppercase tracking-widest text-gray-400 px-1">Actions Rapides</h4>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="switchTab('caps')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center">
+                                <div class="w-8 h-8 rounded-full bg-blue-950/50 text-blue-400 flex items-center justify-center mb-1.5">
+                                    <i data-lucide="compass" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-[9px] font-bold text-gray-300 leading-tight">Mes Caps</span>
+                            </button>
+                            <button onclick="switchTab('simulator')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center">
+                                <div class="w-8 h-8 rounded-full bg-red-950/50 text-cic-accent flex items-center justify-center mb-1.5">
+                                    <i data-lucide="percent" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-[9px] font-bold text-gray-300 leading-tight">Prêt 0%</span>
+                            </button>
+                            <button onclick="switchTab('tools')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center">
+                                <div class="w-8 h-8 rounded-full bg-emerald-950/50 text-emerald-400 flex items-center justify-center mb-1.5">
+                                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                                </div>
+                                <span class="text-[9px] font-bold text-gray-300 leading-tight">Options</span>
+                            </button>
+                            <button onclick="switchTab('chat')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center">
+                                <div class="w-8 h-8 rounded-full bg-purple-950/50 text-purple-400 flex items-center justify-center mb-1.5 relative">
+                                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                                    <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-cic-cardBg"></span>
+                                </div>
+                                <span class="text-[9px] font-bold text-gray-300 leading-tight">Mon Pro</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- APP SECURITY BANNER -->
+                    <div class="bg-emerald-950/20 border border-emerald-900/30 rounded-2xl p-4 flex gap-3.5 items-start">
+                        <div class="p-2.5 bg-emerald-950/50 text-emerald-400 rounded-xl mt-0.5">
+                            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-2xs font-bold text-emerald-400 uppercase tracking-wider">Sécurité active : Sup'Tréso</h4>
+                            <p class="text-3xs text-gray-400 leading-relaxed">
+                                Ton compte évite automatiquement les découverts et agios. Si ton solde passe sous <span class="font-bold text-white font-mono" id="app-threshold-indicator">20</span>€, nous intervenons gratuitement.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- RECENT TRANSACTIONS MOCK -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center px-1">
+                            <h4 class="text-2xs font-extrabold uppercase tracking-widest text-gray-400">Transactions Récentes</h4>
+                            <span class="text-[9px] text-blue-400 font-bold hover:underline cursor-pointer">Tout voir</span>
+                        </div>
+                        <div class="bg-cic-cardBg/40 border border-slate-800/50 rounded-2xl divide-y divide-slate-800/40 overflow-hidden">
+                            <!-- Tx 1 -->
+                            <div class="flex items-center justify-between p-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-gray-300">
+                                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-2xs font-bold text-white">Supermarché U</p>
+                                        <p class="text-3xs text-gray-400 font-mono">11 Juin - Alimentation</p>
+                                    </div>
+                                </div>
+                                <span class="text-2xs font-bold font-mono text-white">-34,20 €</span>
+                            </div>
+                            <!-- Tx 2 -->
+                            <div class="flex items-center justify-between p-3.5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-gray-300">
+                                        <i data-lucide="subway" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-2xs font-bold text-white">SNCF Voyage</p>
+                                        <p class="text-3xs text-gray-400 font-mono">08 Juin - Transport</p>
+                                    </div>
+                                </div>
+                                <span class="text-2xs font-bold font-mono text-white">-19,90 €</span>
+                            </div>
+                            <!-- Tx 3 -->
+                            <div class="flex items-center justify-between p-3.5" id="intl-tx-mock">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-gray-300">
+                                        <i data-lucide="coffee" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-2xs font-bold text-white">Starbucks NYC</p>
+                                        <p class="text-3xs text-gray-400 font-mono" id="tx-intl-date">05 Juin - Loisirs</p>
+                                    </div>
+                                </div>
+                                <span class="text-2xs font-bold font-mono text-white" id="tx-intl-amount">-6,50 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CAPS SELECTOR VIEW -->
+                <div id="view-caps" class="hidden space-y-5 animate-fadeIn">
+                    <div class="text-center py-2">
+                        <span class="text-3xs text-cic-accent font-extrabold uppercase tracking-widest">Tes Décisions</span>
+                        <h2 class="font-display text-xl font-extrabold text-white">À chaque cap, sa solution</h2>
+                        <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Sélectionne ta situation du moment pour découvrir tes outils.</p>
+                    </div>
+
+                    <!-- Dynamic Selector Tabs inside view -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="selectAppCap('financer')" id="btn-cap-financer" class="cap-tab-btn active p-3 bg-cic-blue border border-cic-accent rounded-xl text-left flex items-start gap-2.5">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 text-cic-accent mt-0.5"></i>
+                            <div>
+                                <h4 class="text-2xs font-bold text-white leading-tight">Études</h4>
+                                <p class="text-[9px] text-gray-300 leading-tight">Financement</p>
+                            </div>
+                        </button>
+                        <button onclick="selectAppCap('logement')" id="btn-cap-logement" class="cap-tab-btn p-3 bg-cic-cardBg/40 border border-slate-800 rounded-xl text-left flex items-start gap-2.5">
+                            <i data-lucide="home" class="w-4 h-4 text-blue-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-2xs font-bold text-white leading-tight">Logement</h4>
+                                <p class="text-[9px] text-gray-400 leading-tight">Caution & Assur.</p>
+                            </div>
+                        </button>
+                        <button onclick="selectAppCap('gerer')" id="btn-cap-gerer" class="cap-tab-btn p-3 bg-cic-cardBg/40 border border-slate-800 rounded-xl text-left flex items-start gap-2.5">
+                            <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-2xs font-bold text-white leading-tight">Budget</h4>
+                                <p class="text-[9px] text-gray-400 leading-tight">Sup'Tréso & Outils</p>
+                            </div>
+                        </button>
+                        <button onclick="selectAppCap('voyager')" id="btn-cap-voyager" class="cap-tab-btn p-3 bg-cic-cardBg/40 border border-slate-800 rounded-xl text-left flex items-start gap-2.5">
+                            <i data-lucide="globe" class="w-4 h-4 text-purple-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-2xs font-bold text-white leading-tight">International</h4>
+                                <p class="text-[9px] text-gray-400 leading-tight">Erasmus & Voyages</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Cap Content Card -->
+                    <div id="app-cap-content" class="bg-cic-cardBg/60 border border-slate-800 rounded-3xl p-5 space-y-4">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- 3. SIMULATOR VIEW (0% STUDENT LOAN) -->
+                <div id="view-simulator" class="hidden space-y-5 animate-fadeIn">
+                    <div class="text-center py-2">
+                        <span class="text-3xs text-emerald-400 font-extrabold uppercase tracking-widest">Solidarité Unique</span>
+                        <h2 class="font-display text-xl font-extrabold text-white">Prêt Étudiant à 0%</h2>
+                        <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Exclusivité : Zéro intérêt, aucun frais de dossier.</p>
+                    </div>
+
+                    <!-- Slide 1: Amount -->
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-3xs font-extrabold text-gray-400 uppercase tracking-widest">Montant Souhaité</span>
+                            <span class="font-display font-extrabold text-lg text-white" id="slider-amt-display">10 000 €</span>
+                        </div>
+                        <input type="range" id="app-loan-amount" min="1000" max="50000" step="500" value="10000"
+                               class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cic-accent"
+                               oninput="calculateAppLoan()">
+                        <div class="flex justify-between text-[9px] text-gray-500 font-mono">
+                            <span>1 000 €</span>
+                            <span>50 000 € max</span>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Duration -->
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-3xs font-extrabold text-gray-400 uppercase tracking-widest">Durée du prêt</span>
+                            <span class="font-display font-extrabold text-lg text-white" id="slider-dur-display">5 ans</span>
+                        </div>
+                        <input type="range" id="app-loan-duration" min="1" max="10" step="1" value="5"
+                               class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cic-accent"
+                               oninput="calculateAppLoan()">
+                        <div class="flex justify-between text-[9px] text-gray-500 font-mono">
+                            <span>1 an</span>
+                            <span>10 ans max</span>
+                        </div>
+                    </div>
+
+                    <!-- Result Box -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+                        <div class="grid grid-cols-2 gap-2 divide-x divide-slate-800">
+                            <div>
+                                <p class="text-3xs text-gray-400 uppercase font-bold tracking-wider">Mensualité</p>
+                                <p class="font-display font-black text-xl text-white mt-0.5" id="app-monthly-pay">166.67 €</p>
+                                <p class="text-[9px] text-gray-500">Par mois à 0%</p>
+                            </div>
+                            <div class="pl-3">
+                                <p class="text-3xs text-gray-400 uppercase font-bold tracking-wider">Coût Total</p>
+                                <p class="font-display font-black text-xl text-emerald-400 mt-0.5">0 €</p>
+                                <p class="text-[9px] text-gray-500">TAEG Fixe Garanti</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="submitAppLoan()" class="w-full bg-cic-accent hover:bg-red-600 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-cic-accent/10">
+                        Déposer mon dossier <i data-lucide="check" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 4. CHAT VIEW (CONSEILLER DÉDIÉ) -->
+                <div id="view-chat" class="hidden flex flex-col h-full absolute inset-0 pt-10 pb-2 z-10 animate-fadeIn">
+                    
+                    <!-- Chat Header -->
+                    <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="relative">
+                                <div class="w-8 h-8 rounded-full bg-cic-accent flex items-center justify-center font-display font-black text-xs text-white" id="advisor-avatar-init">
+                                    T
+                                </div>
+                                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 border-2 border-slate-900 rounded-full"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-2xs" id="advisor-name-header">Tamara Raton</h4>
+                                <p class="text-[9px] text-gray-400 leading-none">Conseillère Spécialisée Équipe BUZZ</p>
+                            </div>
+                        </div>
+
+                        <!-- Advisor Quick Profile Selector -->
+                        <select onchange="changeAppAdvisor(this.value)" class="bg-slate-800 text-[10px] text-white border border-slate-700 px-2 py-1 rounded-lg outline-none cursor-pointer">
+                            <option value="tamara">Tamara</option>
+                            <option value="celia">Célia</option>
+                            <option value="solene">Solène</option>
+                        </select>
+                    </div>
+
+                    <!-- Chat Messages Container -->
+                    <div id="app-chat-history" class="flex-1 overflow-y-auto p-4 space-y-3 app-view-container">
+                        <!-- Prepopulated Greetings -->
+                    </div>
+
+                    <!-- Suggestions Chips -->
+                    <div class="p-2 bg-slate-950/60 border-t border-slate-900 flex gap-1.5 overflow-x-auto select-none" id="app-chat-chips">
+                        <button onclick="sendAppQuickQuery('budget')" class="bg-slate-900 hover:bg-slate-800 text-gray-300 text-[9px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap border border-slate-800 transition-colors">
+                            C'est quoi Sup'Tréso ?
+                        </button>
+                        <button onclick="sendAppQuickQuery('pret')" class="bg-slate-900 hover:bg-slate-800 text-gray-300 text-[9px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap border border-slate-800 transition-colors">
+                            Prêt étudiant 0% ?
+                        </button>
+                        <button onclick="sendAppQuickQuery('rdv')" class="bg-slate-900 hover:bg-slate-800 text-gray-300 text-[9px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap border border-slate-800 transition-colors">
+                            Ouvrir un compte ?
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. TOOLS VIEW (OPTIONS & TOGGLES) -->
+                <div id="view-tools" class="hidden space-y-5 animate-fadeIn">
+                    <div class="text-center py-2">
+                        <span class="text-3xs text-purple-400 font-extrabold uppercase tracking-widest">Personnalisation</span>
+                        <h2 class="font-display text-xl font-extrabold text-white">Tes Options 0 Frais</h2>
+                        <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Active ou configure tes options en 1 clic.</p>
+                    </div>
+
+                    <!-- OPTION 1: SUP'TRÉSO -->
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-start gap-3">
+                                <div class="p-2 bg-emerald-950/50 text-emerald-400 rounded-xl mt-0.5">
+                                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xs font-bold text-white">Alerte Sup'Tréso</h4>
+                                    <p class="text-[9px] text-gray-400 leading-normal">Virements d'ajustements gratuits pour éviter d'être à découvert.</p>
+                                </div>
+                            </div>
+                            <!-- Switch -->
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="toggle-suptreso" checked class="sr-only peer" onchange="toggleFeature('suptreso')">
+                                <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                            </label>
+                        </div>
+                        
+                        <div id="suptreso-threshold-control" class="border-t border-slate-800 pt-3 mt-1 space-y-2">
+                            <div class="flex justify-between text-[9px] text-gray-400">
+                                <span>Déclencher le virement si solde inférieur à</span>
+                                <span class="font-bold text-white font-mono" id="val-suptreso-threshold">20 €</span>
+                            </div>
+                            <input type="range" id="slider-suptreso-threshold" min="10" max="100" step="5" value="20"
+                                   class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                   oninput="updateAppThreshold()">
+                        </div>
+                    </div>
+
+                    <!-- OPTION 2: INTERNATIONAL -->
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-start gap-3">
+                                <div class="p-2 bg-blue-950/50 text-blue-400 rounded-xl mt-0.5">
+                                    <i data-lucide="globe-2" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xs font-bold text-white">Option Internationale</h4>
+                                    <p class="text-[9px] text-gray-400 leading-normal">Active la gratuité absolue sur tes devises pour voyager ou ton Erasmus.</p>
+                                </div>
+                            </div>
+                            <!-- Switch -->
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="toggle-intl" class="sr-only peer" onchange="toggleFeature('intl')">
+                                <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- OPTION 3: CAUTION LOCATIVE -->
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-purple-950/50 text-purple-400 rounded-xl">
+                                <i data-lucide="key" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-2xs font-bold text-white">Caution Locative</h4>
+                                <p class="text-[9px] text-gray-400 leading-normal">Le CIC se porte garant de ton studio étudiant.</p>
+                            </div>
+                        </div>
+                        <button onclick="requestCautionLocative()" class="bg-slate-800 hover:bg-slate-700 text-white text-[9px] font-bold px-3 py-2 rounded-xl transition-all">
+                            Gérer
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB BAR NAVIGATION (MOCK IOS NAV BAR) -->
+            <div class="absolute bottom-0 left-0 w-full h-16 glass-tab border-t border-slate-800/80 flex items-center justify-around px-2 z-40">
+                <button onclick="switchTab('home')" id="tab-home" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-blue-500 transition-colors">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span class="text-[8px] font-semibold mt-0.5">Accueil</span>
+                </button>
+                <button onclick="switchTab('caps')" id="tab-caps" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors">
+                    <i data-lucide="compass" class="w-5 h-5"></i>
+                    <span class="text-[8px] font-semibold mt-0.5">Caps</span>
+                </button>
+                <button onclick="switchTab('simulator')" id="tab-simulator" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors">
+                    <i data-lucide="percent" class="w-5 h-5"></i>
+                    <span class="text-[8px] font-semibold mt-0.5">Prêt 0%</span>
+                </button>
+                <button onclick="switchTab('chat')" id="tab-chat" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors relative">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <span class="absolute top-1.5 right-6 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                    <span class="text-[8px] font-semibold mt-0.5">Conseiller</span>
+                </button>
+                <button onclick="switchTab('tools')" id="tab-tools" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors">
+                    <i data-lucide="sliders" class="w-5 h-5"></i>
+                    <span class="text-[8px] font-semibold mt-0.5">Options</span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Set dynamic clock based on system time or preset
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('app-clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Screen Splash Transition
+        function dismissSplash() {
+            const splash = document.getElementById('screen-splash');
+            splash.classList.add('translate-y-full', 'opacity-0');
+            setTimeout(() => splash.remove(), 600);
+            
+            // Pre-render the default Cap Content (Financer)
+            selectAppCap('financer');
+            initChatGreetings();
+        }
+
+        // Custom Toast system
+        function showAppToast(message, type = 'success') {
+            const container = document.getElementById('app-toast-container');
+            const toast = document.createElement('div');
+            toast.className = `flex items-center gap-2 p-3 rounded-xl shadow-lg border text-3xs transition-all duration-300 transform translate-y-[-10px] opacity-0 pointer-events-auto bg-slate-900 ${
+                type === 'success' ? 'border-emerald-800/60 text-slate-100' : 'border-red-900/60 text-slate-100'
+            }`;
+            
+            const icon = type === 'success' ? 'check-circle' : 'alert-circle';
+            const iconColor = type === 'success' ? 'text-emerald-400' : 'text-cic-accent';
+
+            toast.innerHTML = `
+                <div class="${iconColor}">
+                    <i data-lucide="${icon}" class="w-4 h-4"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-slate-100 leading-normal">${message}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+            }, 50);
+
+            // Auto-dismiss
+            setTimeout(() => {
+                toast.classList.add('translate-y-[-10px]', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // State variables
+        let state = {
+            currentTab: 'home',
+            balance: 348.50,
+            hasAppliedForLoan: false,
+            suptresoActive: true,
+            suptresoThreshold: 20,
+            intlOptionActive: false,
+            currentAdvisor: 'tamara'
+        };
+
+        // Tab Switching Engine
+        function switchTab(tabId) {
+            // Hide all views
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-caps').classList.add('hidden');
+            document.getElementById('view-simulator').classList.add('hidden');
+            document.getElementById('view-chat').classList.add('hidden');
+            document.getElementById('view-tools').classList.add('hidden');
+
+            // Deactivate all tabbar buttons
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.className = "nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors";
+            });
+
+            // Activate current
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).className = "nav-tab flex flex-col items-center justify-center flex-1 py-1 text-blue-500 transition-colors";
+            
+            state.currentTab = tabId;
+        }
+
+        // Caps Content Engine
+        const appCapsData = {
+            financer: {
+                title: "Études & Projets",
+                subtitle: "Financer ton année sans contrainte",
+                desc: "Le CIC t'offre les clés pour réussir avec sa posture d'aide unique et responsable sur le marché.",
+                items: [
+                    { icon: "percent", color: "text-cic-accent", text: "Prêt étudiant exclusif à 0% d'intérêt." },
+                    { icon: "calendar-clock", color: "text-blue-400", text: "Commence à rembourser une fois tes études bouclées." }
+                ],
+                ctaText: "Simuler mon Prêt 0%",
+                action: () => switchTab('simulator')
+            },
+            logement: {
+                title: "Mon Premier Logement",
+                subtitle: "Du garant à l'assurance",
+                desc: "Rassure ton bailleur avec les engagements solides et transparents du CIC.",
+                items: [
+                    { icon: "key", color: "text-purple-400", text: "Caution Locative : Le CIC est ton garant officiel." },
+                    { icon: "shield", color: "text-emerald-400", text: "Assurance Habitation / Coloc adaptée à prix mini." }
+                ],
+                ctaText: "Gérer mes garanties",
+                action: () => switchTab('tools')
+            },
+            gerer: {
+                title: "Gestion de Budget",
+                subtitle: "Apprends à piloter sans stress",
+                desc: "Des outils intelligents nouvelle génération intégrés à ton application mobile.",
+                items: [
+                    { icon: "shield-alert", color: "text-emerald-400", text: "Anti-découvert Sup'Tréso actif d'office." },
+                    { icon: "pie-chart", color: "text-blue-400", text: "Catégorisation automatique de tes achats." }
+                ],
+                ctaText: "Configurer mon seuil",
+                action: () => switchTab('tools')
+            },
+            voyager: {
+                title: "Option Internationale",
+                subtitle: "En voyage ou en Erasmus",
+                desc: "Zéro frais bancaires partout à l'étranger pour tes études ou tes vacances.",
+                items: [
+                    { icon: "globe-2", color: "text-blue-400", text: "Aucune commission de change sur tes paiements." },
+                    { icon: "ambulance", color: "text-red-400", text: "Assistance et garanties rapatriement incluses." }
+                ],
+                ctaText: "Activer l'option devises",
+                action: () => switchTab('tools')
+            }
+        };
+
+        function selectAppCap(capKey) {
+            // Switch tabs styling
+            document.querySelectorAll('.cap-tab-btn').forEach(btn => {
+                btn.className = "cap-tab-btn p-3 bg-cic-cardBg/40 border border-slate-800 rounded-xl text-left flex items-start gap-2.5";
+            });
+            document.getElementById(`btn-cap-${capKey}`).className = "cap-tab-btn active p-3 bg-cic-blue border border-cic-accent rounded-xl text-left flex items-start gap-2.5";
+
+            // Inject Content
+            const data = appCapsData[capKey];
+            const container = document.getElementById('app-cap-content');
+            
+            let listHtml = '';
+            data.items.forEach(it => {
+                listHtml += `
+                    <div class="flex gap-3 items-start">
+                        <div class="p-1.5 bg-slate-900 rounded-lg ${it.color} mt-0.5">
+                            <i data-lucide="${it.icon}" class="w-3.5 h-3.5"></i>
+                        </div>
+                        <p class="text-[10px] text-gray-300 leading-normal">${it.text}</p>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="space-y-1">
+                    <span class="text-[9px] text-cic-accent font-extrabold uppercase tracking-widest">${data.title}</span>
+                    <h3 class="font-display font-extrabold text-xs text-white">${data.subtitle}</h3>
+                    <p class="text-3xs text-gray-400 leading-relaxed">${data.desc}</p>
+                </div>
+                <div class="space-y-2.5 pt-2 border-t border-slate-800/80">
+                    ${listHtml}
+                </div>
+                <button onclick="appCapsData['${capKey}'].action()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-3xs py-3 rounded-xl transition-all flex items-center justify-center gap-1 mt-4">
+                    ${data.ctaText} <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </button>
+            `;
+
+            lucide.createIcons();
+        }
+
+        // Loan Calculator
+        function calculateAppLoan() {
+            const amount = parseFloat(document.getElementById('app-loan-amount').value);
+            const years = parseInt(document.getElementById('app-loan-duration').value);
+
+            document.getElementById('slider-amt-display').innerText = amount.toLocaleString('fr-FR') + " €";
+            document.getElementById('slider-dur-display').innerText = years + " an" + (years > 1 ? "s" : "");
+
+            const months = years * 12;
+            const monthlyValue = amount / months;
+
+            document.getElementById('app-monthly-pay').innerText = monthlyValue.toFixed(2) + " €";
+        }
+
+        function submitAppLoan() {
+            const amt = document.getElementById('slider-amt-display').innerText;
+            state.hasAppliedForLoan = true;
+            
+            // Show toast and activate widget
+            showAppToast("Dossier de prêt soumis avec succès !", 'success');
+            
+            document.getElementById('loan-widget-amount').innerText = amt;
+            document.getElementById('loan-status-widget').classList.remove('hidden');
+            
+            setTimeout(() => {
+                switchTab('home');
+            }, 500);
+        }
+
+        // Toggles & Options Engine
+        function toggleFeature(featureKey) {
+            if (featureKey === 'suptreso') {
+                const checked = document.getElementById('toggle-suptreso').checked;
+                state.suptresoActive = checked;
+                
+                const control = document.getElementById('suptreso-threshold-control');
+                if (checked) {
+                    control.classList.remove('hidden');
+                    showAppToast("Protection anti-découvert Sup'Tréso active.", 'success');
+                } else {
+                    control.classList.add('hidden');
+                    showAppToast("Sup'Tréso désactivée. Attention aux agios.", 'error');
+                }
+            } else if (featureKey === 'intl') {
+                const checked = document.getElementById('toggle-intl').checked;
+                state.intlOptionActive = checked;
+
+                const cardBadge = document.getElementById('badge-intl-card');
+                const cardText = document.getElementById('text-intl-card');
+                const txDate = document.getElementById('tx-intl-date');
+                const txAmt = document.getElementById('tx-intl-amount');
+
+                if (checked) {
+                    cardBadge.className = "w-1.5 h-1.5 rounded-full bg-emerald-400";
+                    cardText.innerText = "Active (0€ frais)";
+                    txDate.innerText = "05 Juin - Starbucks NYC (Sans frais)";
+                    txAmt.innerText = "-6,50 USD";
+                    showAppToast("Option Internationale Activée (Frais à 0€)", 'success');
+                } else {
+                    cardBadge.className = "w-1.5 h-1.5 rounded-full bg-red-500";
+                    cardText.innerText = "Désactivée";
+                    txDate.innerText = "05 Juin - Starbucks NYC";
+                    txAmt.innerText = "-6,50 €";
+                    showAppToast("Option Internationale Désactivée.", 'error');
+                }
+            }
+        }
+
+        function updateAppThreshold() {
+            const val = document.getElementById('slider-suptreso-threshold').value;
+            state.suptresoThreshold = val;
+
+            document.getElementById('val-suptreso-threshold').innerText = val + " €";
+            document.getElementById('threshold-val-card').innerText = val;
+            document.getElementById('app-threshold-indicator').innerText = val;
+        }
+
+        function requestCautionLocative() {
+            showAppToast("Demande de Caution transmise au bailleur.", 'success');
+        }
+
+        // Advisor & Live Chat System
+        const appAdvisors = {
+            tamara: { name: "Tamara Raton", init: "T", color: "bg-cic-accent", welcome: "Salut ! C'est Tamara. Une question sur ton prêt à 0% ou sur les garanties logement ?" },
+            celia: { name: "Célia Compan", init: "C", color: "bg-blue-600", welcome: "Hey ! Moi c'est Célia. Prête à t'expliquer nos outils digitaux ou l'option devises." },
+            solene: { name: "Solène Sagnet", init: "S", color: "bg-emerald-600", welcome: "Bonjour ! Je suis Solène. Parlons numérique responsable, RSE ou ateliers de budget." }
+        };
+
+        const automatedResponses = {
+            budget: {
+                user: "Explique-moi Sup'Tréso !",
+                bot: "C'est très simple ! C'est un bouclier anti-découvert gratuit. Tu fixes ton seuil de sécurité (par exemple 20€). Si ton solde glisse en-dessous, l'application transfère automatiquement de l'argent de ton épargne vers ton compte courant. Adieu les agios !"
+            },
+            pret: {
+                user: "Le prêt est-il vraiment sans intérêts ?",
+                bot: "Oui, totalement ! C'est un taux fixe à 0% unique sur le marché pour les 18-25 ans. Il n'y a aucun frais de dossier. Tu ne rembourses strictement que ce que tu as emprunté. C'est l'engagement solidaire du CIC."
+            },
+            rdv: {
+                user: "Comment finaliser mon compte ?",
+                bot: "Tu y es presque ! Un conseiller dédié t'appelle sous 24h pour planifier un rendez-visite de finalisation à distance ou en agence, selon ton choix."
+            }
+        };
+
+        function changeAppAdvisor(advisorKey) {
+            state.currentAdvisor = advisorKey;
+            const adv = appAdvisors[advisorKey];
+
+            document.getElementById('advisor-avatar-init').innerText = adv.init;
+            document.getElementById('advisor-avatar-init').className = `w-8 h-8 rounded-full ${adv.color} flex items-center justify-center font-display font-black text-xs text-white`;
+            document.getElementById('advisor-name-header').innerText = adv.name;
+
+            // Restart Chat History
+            const chat = document.getElementById('app-chat-history');
+            chat.innerHTML = `
+                <div class="flex items-start gap-2 max-w-[85%] animate-fadeIn">
+                    <div class="w-6 h-6 rounded-full ${adv.color} flex items-center justify-center font-display font-black text-[9px] text-white">${adv.init}</div>
+                    <div class="bg-slate-900 border border-slate-800/60 p-2.5 rounded-2xl rounded-tl-none text-2xs leading-normal">
+                        ${adv.welcome}
+                    </div>
+                </div>
+            `;
+        }
+
+        function initChatGreetings() {
+            changeAppAdvisor('tamara');
+        }
+
+        function sendAppQuickQuery(queryKey) {
+            const data = automatedResponses[queryKey];
+            if (!data) return;
+
+            const chat = document.getElementById('app-chat-history');
+            const adv = appAdvisors[state.currentAdvisor];
+
+            // Append User msg
+            const userMsg = document.createElement('div');
+            userMsg.className = "flex items-start gap-2 max-w-[85%] ml-auto justify-end animate-fadeIn";
+            userMsg.innerHTML = `
+                <div class="bg-cic-accent p-2.5 rounded-2xl rounded-tr-none text-2xs leading-normal text-white">
+                    ${data.user}
+                </div>
+            `;
+            chat.appendChild(userMsg);
+            chat.scrollTop = chat.scrollHeight;
+
+            // Append typing...
+            const typing = document.createElement('div');
+            typing.className = "flex items-start gap-2 max-w-[85%] animate-fadeIn app-typing-indicator";
+            typing.innerHTML = `
+                <div class="w-6 h-6 rounded-full ${adv.color} flex items-center justify-center font-display font-black text-[9px] text-white">${adv.init}</div>
+                <div class="bg-slate-900/50 border border-slate-800/40 p-2.5 rounded-2xl rounded-tl-none text-2xs text-gray-500 italic">
+                    En train d'écrire...
+                </div>
+            `;
+            chat.appendChild(typing);
+            chat.scrollTop = chat.scrollHeight;
+
+            setTimeout(() => {
+                const ind = chat.querySelector('.app-typing-indicator');
+                if (ind) ind.remove();
+
+                const botMsg = document.createElement('div');
+                botMsg.className = "flex items-start gap-2 max-w-[85%] animate-fadeIn";
+                botMsg.innerHTML = `
+                    <div class="w-6 h-6 rounded-full ${adv.color} flex items-center justify-center font-display font-black text-[9px] text-white">${adv.init}</div>
+                    <div class="bg-slate-900 border border-slate-800/60 p-2.5 rounded-2xl rounded-tl-none text-2xs leading-normal text-gray-200">
+                        ${data.bot}
+                    </div>
+                `;
+                chat.appendChild(botMsg);
+                chat.scrollTop = chat.scrollHeight;
+            }, 1000);
+        }
+
+        // Initialize calculator view values immediately
+        calculateAppLoan();
+    </script>
+</body>
+</html>
