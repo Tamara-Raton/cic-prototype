@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CIC Parcours jeunes | L'application de tes premiers caps</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <script>
@@ -94,21 +91,16 @@
 </head>
 <body class="font-sans bg-slate-900 text-white overflow-hidden h-full flex items-center justify-center app-wrapper p-4 sm:p-6 lg:p-8">
 
-    <!-- Custom Modern App Toast Container -->
     <div id="app-toast-container" class="absolute top-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 max-w-xs w-11/12 pointer-events-none"></div>
 
-    <!-- Mock Phone Shell (Full Screen on Mobile, Framed Device on Desktop) -->
     <div class="phone-frame relative w-full max-w-[390px] h-[800px] bg-cic-darkBg rounded-[55px] border-[12px] border-slate-800 shadow-2xl flex flex-col overflow-hidden transition-all duration-300">
         
-        <!-- Camera Notch for Desktop Preview -->
         <div class="notch-bar absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-7 bg-slate-800 rounded-b-3xl z-50 flex items-center justify-center">
             <span class="w-12 h-1 bg-black rounded-full mb-1"></span>
         </div>
 
-        <!-- App Screens Container -->
         <div class="flex-1 flex flex-col relative h-full w-full overflow-hidden pt-8 pb-16">
             
-            <!-- Dynamic StatusBar Mock -->
             <div class="absolute top-0 left-0 w-full px-6 pt-2 pb-1 flex justify-between items-center text-2xs font-semibold text-gray-400 z-40 bg-cic-darkBg/60 backdrop-blur-md">
                 <span id="app-clock" class="font-display">11:54</span>
                 <div class="flex items-center gap-1.5">
@@ -118,7 +110,6 @@
                 </div>
             </div>
 
-            <!-- ONBOARDING / SPLASH SCREEN (Overlay) -->
             <div id="screen-splash" class="absolute inset-0 bg-gradient-to-b from-cic-blue via-cic-darkBg to-cic-darkBg z-50 flex flex-col justify-between p-8 transition-all duration-500">
                 <div class="flex flex-col items-center pt-16 text-center">
                     <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-12 w-auto object-contain mb-4" onerror="this.onerror=null; this.src='https://placehold.co/120x40/0a2540/ffffff?text=CIC';">
@@ -136,7 +127,6 @@
                         </p>
                     </div>
 
-                    <!-- UPDATED LOGO & REMOVED BLANK HEADER MENTION -->
                     <div class="bg-cic-cardBg/60 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-center gap-4 max-w-[280px] mx-auto">
                         <div class="w-16 h-auto flex-shrink-0">
                             <img src="logo_buzz.jpg" alt="Logo BUZZ" class="w-full h-auto object-contain rounded-md">
@@ -154,13 +144,10 @@
                 </div>
             </div>
 
-            <!-- MAIN VIEWS CONTAINER -->
             <div class="flex-1 overflow-y-auto app-view-container px-4 pt-4 bg-cic-darkBg relative">
 
-                <!-- 1. DASHBOARD VIEW (HOME) -->
                 <div id="view-home" class="space-y-5 animate-fadeIn">
                     
-                    <!-- App Welcome Header -->
                     <div class="flex justify-between items-center pb-2">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cic-accent to-red-500 flex items-center justify-center font-display font-extrabold text-sm border-2 border-slate-800 shadow-md">
@@ -174,7 +161,6 @@
                         <img src="Logo_CIC_2006.svg.png" alt="CIC Logo" class="h-6 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x25/0a2540/ffffff?text=CIC';">
                     </div>
 
-                    <!-- IMMERSIVE ACCOUNT CARD -->
                     <div class="relative bg-gradient-to-br from-cic-blue via-slate-900 to-cic-darkBg border border-slate-800 rounded-3xl p-5 overflow-hidden shadow-xl">
                         <div class="absolute -top-12 -right-12 w-32 h-32 bg-cic-accent/15 rounded-full blur-2xl"></div>
                         <div class="flex justify-between items-start mb-4">
@@ -189,7 +175,6 @@
                             </p>
                         </div>
 
-                        <!-- Micro Info Grid inside card -->
                         <div class="grid grid-cols-2 gap-4 border-t border-slate-800/80 pt-4 mt-5">
                             <div>
                                 <p class="text-[9px] text-gray-400 uppercase font-semibold">Option Internationale</p>
@@ -208,7 +193,6 @@
                         </div>
                     </div>
 
-                    <!-- LOAN STATUS CARD (DYNAMIC) -->
                     <div id="loan-status-widget" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 animate-slideIn">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-[9px] font-extrabold text-cic-accent uppercase tracking-wider">Demande de Prêt à 0%</span>
@@ -225,7 +209,6 @@
                         </div>
                     </div>
 
-                    <!-- QUICK ACTIONS IN-APP -->
                     <div class="space-y-3">
                         <h4 class="text-2xs font-extrabold uppercase tracking-widest text-gray-400 px-1">Actions Rapides</h4>
                         <div class="grid grid-cols-4 gap-2">
@@ -241,11 +224,12 @@
                                 </div>
                                 <span class="text-[9px] font-bold text-gray-300 leading-tight">Prêt 0%</span>
                             </button>
-                            <button onclick="switchTab('tools')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center">
-                                <div class="w-8 h-8 rounded-full bg-emerald-950/50 text-emerald-400 flex items-center justify-center mb-1.5">
-                                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                            <button onclick="switchTab('cicount')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center relative">
+                                <div class="w-8 h-8 rounded-full bg-amber-950/50 text-amber-400 flex items-center justify-center mb-1.5">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
                                 </div>
-                                <span class="text-[9px] font-bold text-gray-300 leading-tight">Options</span>
+                                <span class="text-[9px] font-bold text-gray-300 leading-tight">CIC'ount</span>
+                                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[7px] px-1 rounded-full font-extrabold">NEW</span>
                             </button>
                             <button onclick="switchTab('chat')" class="flex flex-col items-center justify-center p-3 bg-cic-cardBg border border-slate-800/60 rounded-2xl hover:border-slate-700 transition-all text-center">
                                 <div class="w-8 h-8 rounded-full bg-purple-950/50 text-purple-400 flex items-center justify-center mb-1.5 relative">
@@ -257,7 +241,6 @@
                         </div>
                     </div>
 
-                    <!-- APP SECURITY BANNER -->
                     <div class="bg-emerald-950/20 border border-emerald-900/30 rounded-2xl p-4 flex gap-3.5 items-start">
                         <div class="p-2.5 bg-emerald-950/50 text-emerald-400 rounded-xl mt-0.5">
                             <i data-lucide="shield-alert" class="w-5 h-5"></i>
@@ -270,14 +253,12 @@
                         </div>
                     </div>
 
-                    <!-- RECENT TRANSACTIONS MOCK -->
                     <div class="space-y-3">
                         <div class="flex justify-between items-center px-1">
                             <h4 class="text-2xs font-extrabold uppercase tracking-widest text-gray-400">Transactions Récentes</h4>
                             <span class="text-[9px] text-blue-400 font-bold hover:underline cursor-pointer">Tout voir</span>
                         </div>
                         <div class="bg-cic-cardBg/40 border border-slate-800/50 rounded-2xl divide-y divide-slate-800/40 overflow-hidden">
-                            <!-- Tx 1 -->
                             <div class="flex items-center justify-between p-3.5">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-gray-300">
@@ -290,7 +271,6 @@
                                 </div>
                                 <span class="text-2xs font-bold font-mono text-white">-34,20 €</span>
                             </div>
-                            <!-- Tx 2 -->
                             <div class="flex items-center justify-between p-3.5">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-gray-300">
@@ -303,7 +283,6 @@
                                 </div>
                                 <span class="text-2xs font-bold font-mono text-white">-19,90 €</span>
                             </div>
-                            <!-- Tx 3 -->
                             <div class="flex items-center justify-between p-3.5" id="intl-tx-mock">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center text-gray-300">
@@ -320,7 +299,6 @@
                     </div>
                 </div>
 
-                <!-- 2. CAPS SELECTOR VIEW -->
                 <div id="view-caps" class="hidden space-y-5 animate-fadeIn">
                     <div class="text-center py-2">
                         <span class="text-3xs text-cic-accent font-extrabold uppercase tracking-widest">Tes Décisions</span>
@@ -328,7 +306,6 @@
                         <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Sélectionne ta situation du moment pour découvrir tes outils.</p>
                     </div>
 
-                    <!-- Dynamic Selector Tabs inside view -->
                     <div class="grid grid-cols-2 gap-2">
                         <button onclick="selectAppCap('financer')" id="btn-cap-financer" class="cap-tab-btn active p-3 bg-cic-blue border border-cic-accent rounded-xl text-left flex items-start gap-2.5">
                             <i data-lucide="graduation-cap" class="w-4 h-4 text-cic-accent mt-0.5"></i>
@@ -360,13 +337,10 @@
                         </button>
                     </div>
 
-                    <!-- Dynamic Cap Content Card -->
                     <div id="app-cap-content" class="bg-cic-cardBg/60 border border-slate-800 rounded-3xl p-5 space-y-4">
-                        <!-- Injected via JS -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- 3. SIMULATOR VIEW (0% STUDENT LOAN) -->
                 <div id="view-simulator" class="hidden space-y-5 animate-fadeIn">
                     <div class="text-center py-2">
                         <span class="text-3xs text-emerald-400 font-extrabold uppercase tracking-widest">Solidarité Unique</span>
@@ -374,7 +348,6 @@
                         <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Exclusivité : Zéro intérêt, aucun frais de dossier.</p>
                     </div>
 
-                    <!-- Slide 1: Amount -->
                     <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-3">
                         <div class="flex justify-between items-center">
                             <span class="text-3xs font-extrabold text-gray-400 uppercase tracking-widest">Montant Souhaité</span>
@@ -389,7 +362,6 @@
                         </div>
                     </div>
 
-                    <!-- Slide 2: Duration -->
                     <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-3">
                         <div class="flex justify-between items-center">
                             <span class="text-3xs font-extrabold text-gray-400 uppercase tracking-widest">Durée du prêt</span>
@@ -404,7 +376,6 @@
                         </div>
                     </div>
 
-                    <!-- Result Box -->
                     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
                         <div class="grid grid-cols-2 gap-2 divide-x divide-slate-800">
                             <div>
@@ -425,10 +396,70 @@
                     </button>
                 </div>
 
-                <!-- 4. CHAT VIEW (CONSEILLER DÉDIÉ) -->
+                <div id="view-cicount" class="hidden space-y-4 animate-fadeIn">
+                    <div class="text-center py-2">
+                        <span class="text-3xs text-amber-400 font-extrabold uppercase tracking-widest">Dépenses de Groupe</span>
+                        <h2 class="font-display text-xl font-extrabold text-white">CIC'ount tes dépenses</h2>
+                        <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Fini les galères de calculs entre potes ou en coloc.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-amber-950/40 to-slate-900 border border-slate-800 rounded-2xl p-4 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-amber-950/60 text-amber-400 flex items-center justify-center">
+                                <i data-lucide="palmtree" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-2xs font-bold text-white">Week-end Montpellier 🏖️</h4>
+                                <p class="text-3xs text-gray-400">4 participants • 3 dépenses saisies</p>
+                            </div>
+                        </div>
+                        <span class="text-3xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">En cours</span>
+                    </div>
+
+                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <h4 class="text-3xs font-extrabold uppercase text-gray-400 tracking-wider">État des comptes</h4>
+                        <div class="space-y-2.5 text-2xs">
+                            <div class="flex justify-between items-center border-b border-slate-800/50 pb-2">
+                                <span class="text-gray-300">Isis (Toi)</span>
+                                <span class="text-emerald-400 font-semibold">+ 45,50 €</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-800/50 pb-2">
+                                <span class="text-gray-300">Tamara</span>
+                                <span class="text-emerald-400 font-semibold">+ 12,00 €</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-800/50 pb-2">
+                                <span class="text-gray-300">Célia</span>
+                                <span class="text-red-400 font-semibold">- 22,50 €</span>
+                            </div>
+                            <div class="flex justify-between items-center pb-0.5">
+                                <span class="text-gray-300">Solène</span>
+                                <span class="text-red-400 font-semibold">- 35,00 €</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-950/20 border border-amber-900/30 rounded-2xl p-4 space-y-2">
+                        <h4 class="text-3xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Équilibrage Magique instantané
+                        </h4>
+                        <div class="space-y-1.5 text-3xs text-gray-300 leading-normal">
+                            <p class="flex items-center gap-2"><i data-lucide="arrow-right-left" class="w-3 h-3 text-amber-400"></i> Célia doit rembourser <strong>22,50 €</strong> à Isis.</p>
+                            <p class="flex items-center gap-2"><i data-lucide="arrow-right-left" class="w-3 h-3 text-amber-400"></i> Solène doit rembourser <strong>23,00 €</strong> à Isis, et <strong>12,00 €</strong> à Tamara.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="showAppToast('Fonctionnalité de saisie ajoutée au prototype !', 'success')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-3xs py-3.5 rounded-xl transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="plus" class="w-4 h-4 text-amber-400"></i> Ajouter un achat
+                        </button>
+                        <button onclick="showAppToast('Équilibrage CIC\'ount effectué via Paylib / virement instantané !', 'success')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-3xs py-3.5 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/10">
+                            <i data-lucide="check-square" class="w-4 h-4"></i> Tout solder
+                        </button>
+                    </div>
+                </div>
+
                 <div id="view-chat" class="hidden flex flex-col h-full absolute inset-0 pt-10 pb-2 z-10 animate-fadeIn">
                     
-                    <!-- Chat Header -->
                     <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
                         <div class="flex items-center gap-2.5">
                             <div class="relative">
@@ -443,7 +474,6 @@
                             </div>
                         </div>
 
-                        <!-- Advisor Quick Profile Selector -->
                         <select onchange="changeAppAdvisor(this.value)" class="bg-slate-800 text-[10px] text-white border border-slate-700 px-2 py-1 rounded-lg outline-none cursor-pointer">
                             <option value="tamara">Tamara</option>
                             <option value="celia">Célia</option>
@@ -451,12 +481,9 @@
                         </select>
                     </div>
 
-                    <!-- Chat Messages Container -->
                     <div id="app-chat-history" class="flex-1 overflow-y-auto p-4 space-y-3 app-view-container">
-                        <!-- Prepopulated Greetings -->
-                    </div>
+                        </div>
 
-                    <!-- Suggestions Chips -->
                     <div class="p-2 bg-slate-950/60 border-t border-slate-900 flex gap-1.5 overflow-x-auto select-none" id="app-chat-chips">
                         <button onclick="sendAppQuickQuery('budget')" class="bg-slate-900 hover:bg-slate-800 text-gray-300 text-[9px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap border border-slate-800 transition-colors">
                             C'est quoi Sup'Tréso ?
@@ -470,7 +497,6 @@
                     </div>
                 </div>
 
-                <!-- 5. TOOLS VIEW (OPTIONS & TOGGLES) -->
                 <div id="view-tools" class="hidden space-y-5 animate-fadeIn">
                     <div class="text-center py-2">
                         <span class="text-3xs text-purple-400 font-extrabold uppercase tracking-widest">Personnalisation</span>
@@ -478,7 +504,6 @@
                         <p class="text-3xs text-gray-400 max-w-xs mx-auto mt-1">Active ou configure tes options en 1 clic.</p>
                     </div>
 
-                    <!-- OPTION 1: SUP'TRÉSO -->
                     <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-4">
                         <div class="flex justify-between items-start">
                             <div class="flex items-start gap-3">
@@ -490,7 +515,6 @@
                                     <p class="text-[9px] text-gray-400 leading-normal">Virements d'ajustements gratuits pour éviter d'être à découvert.</p>
                                 </div>
                             </div>
-                            <!-- Switch -->
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="toggle-suptreso" checked class="sr-only peer" onchange="toggleFeature('suptreso')">
                                 <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -508,7 +532,6 @@
                         </div>
                     </div>
 
-                    <!-- OPTION 2: INTERNATIONAL -->
                     <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 space-y-4">
                         <div class="flex justify-between items-start">
                             <div class="flex items-start gap-3">
@@ -520,7 +543,6 @@
                                     <p class="text-[9px] text-gray-400 leading-normal">Active la gratuité absolue sur tes devises pour voyager ou ton Erasmus.</p>
                                 </div>
                             </div>
-                            <!-- Switch -->
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="toggle-intl" class="sr-only peer" onchange="toggleFeature('intl')">
                                 <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
@@ -528,7 +550,6 @@
                         </div>
                     </div>
 
-                    <!-- OPTION 3: CAUTION LOCATIVE -->
                     <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 flex justify-between items-center">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-purple-950/50 text-purple-400 rounded-xl">
@@ -547,7 +568,6 @@
 
             </div>
 
-            <!-- TAB BAR NAVIGATION (MOCK IOS NAV BAR) -->
             <div class="absolute bottom-0 left-0 w-full h-16 glass-tab border-t border-slate-800/80 flex items-center justify-around px-2 z-40">
                 <button onclick="switchTab('home')" id="tab-home" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-blue-500 transition-colors">
                     <i data-lucide="home" class="w-5 h-5"></i>
@@ -561,10 +581,9 @@
                     <i data-lucide="percent" class="w-5 h-5"></i>
                     <span class="text-[8px] font-semibold mt-0.5">Prêt 0%</span>
                 </button>
-                <button onclick="switchTab('chat')" id="tab-chat" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors relative">
-                    <i data-lucide="message-square" class="w-5 h-5"></i>
-                    <span class="absolute top-1.5 right-6 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                    <span class="text-[8px] font-semibold mt-0.5">Conseiller</span>
+                <button onclick="switchTab('cicount')" id="tab-cicount" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors relative">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span class="text-[8px] font-semibold mt-0.5">CIC'ount</span>
                 </button>
                 <button onclick="switchTab('tools')" id="tab-tools" class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-gray-400 transition-colors">
                     <i data-lucide="sliders" class="w-5 h-5"></i>
@@ -652,6 +671,7 @@
             document.getElementById('view-home').classList.add('hidden');
             document.getElementById('view-caps').classList.add('hidden');
             document.getElementById('view-simulator').classList.add('hidden');
+            if(document.getElementById('view-cicount')) document.getElementById('view-cicount').classList.add('hidden');
             document.getElementById('view-chat').classList.add('hidden');
             document.getElementById('view-tools').classList.add('hidden');
 
