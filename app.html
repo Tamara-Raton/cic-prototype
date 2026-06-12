@@ -136,13 +136,13 @@
                         </p>
                     </div>
 
-                    <div class="bg-cic-cardBg/60 border border-slate-800 rounded-2xl p-4 text-left flex items-center gap-3">
-                        <div class="p-2.5 bg-red-950/50 border border-red-900/30 text-cic-accent rounded-xl">
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    <!-- UPDATED LOGO & REMOVED BLANK HEADER MENTION -->
+                    <div class="bg-cic-cardBg/60 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-center gap-4 max-w-[280px] mx-auto">
+                        <div class="w-16 h-auto flex-shrink-0">
+                            <img src="logo_buzz.jpg" alt="Logo BUZZ" class="w-full h-auto object-contain rounded-md">
                         </div>
-                        <div>
-                            <p class="text-2xs font-bold text-white">Posture d'aide & Solidarité</p>
-                            <p class="text-3xs text-gray-400 leading-normal">Par l'Agence BUZZ pour la cible 18-25 ans.</p>
+                        <div class="border-l border-slate-800 pl-4 text-left">
+                            <p class="text-2xs font-semibold text-gray-300 tracking-wide leading-snug">En partenariat avec Buzz</p>
                         </div>
                     </div>
                 </div>
@@ -769,11 +769,11 @@
             document.getElementById('app-monthly-pay').innerText = monthlyValue.toFixed(2) + " €";
         }
 
+        // Submit Loan
         function submitAppLoan() {
             const amt = document.getElementById('slider-amt-display').innerText;
             state.hasAppliedForLoan = true;
             
-            // Show toast and activate widget
             showAppToast("Dossier de prêt soumis avec succès !", 'success');
             
             document.getElementById('loan-widget-amount').innerText = amt;
